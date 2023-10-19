@@ -8,9 +8,11 @@ terraform {
 }
 
 provider "azurerm" {
-  # Configuration options
   features {}
+  skip_provider_registration = true
 }
 
-
-
+resource "azurerm_resource_group" "resource_group"{
+    name = "rg_benz"
+    location = "West Europe"
+}
