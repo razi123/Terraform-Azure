@@ -20,18 +20,20 @@ steps:
     displayName: 'Terraform Init and Validate'
 
   - script: |
-      terraform plan -out=tfplan
-    displayName: 'Terraform Plan'
+      export ARM_CLIENT_ID = $(AzureServicePrincipleId)
+      export ARM_CLIENT_SECRET = $(AzureServicePrincipleKey)
+      export ARM_SUBSCRIPTION_ID = $(AzureSubscriptionId)
+      export AEM_TENANT_ID=$(AzureTenantId)
 
-  - script: |
-      terraform apply -auto-approve tfplan
-    displayName: 'Terraform Apply'
-   
-  - script: |
-      terraform init
-      terraform apply -auto-approve
-    displayName: "Run Terraform"
-
+      #deploy terraform
+      terrafrom apply -auto-approve
+    displayName: 'Authenticate to Azure'
+    env:
+      AzureServicePrincipleId: $(ARM_CLIENT_ID)
+      AzureServicePrincipleKey: $(ARM_CLIENT_CLIENT_SECRET)
+      AzureSubscriptionId: $(ARM_SUBSCRIPTION_ID)
+      AzureTenantId: $(ARM_TENANT_ID)
+    workingDirectory:
 
   
     
