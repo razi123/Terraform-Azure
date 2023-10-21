@@ -18,6 +18,7 @@ steps:
       terraform init
       terraform validate
     displayName: 'Terraform Init and Validate'
+    workingDirectory: $(System.DefaultWorkingDirectory)/terra_config/
 
   - script: |
       export ARM_CLIENT_ID=$(AzureServicePrincipleId)
@@ -25,7 +26,7 @@ steps:
       export ARM_SUBSCRIPTION_ID=$(AzureSubscriptionId)
       export ARM_TENANT_ID=$(AzureTenantId)
 
-      #deploy terraform
+      # deploy terraform
       terraform apply -auto-approve
     displayName: 'Authenticate to Azure'
     env:
