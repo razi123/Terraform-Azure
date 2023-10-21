@@ -20,20 +20,20 @@ steps:
     displayName: 'Terraform Init and Validate'
 
   - script: |
-      export ARM_CLIENT_ID = $(AzureServicePrincipleId)
-      export ARM_CLIENT_SECRET = $(AzureServicePrincipleKey)
-      export ARM_SUBSCRIPTION_ID = $(AzureSubscriptionId)
-      export AEM_TENANT_ID=$(AzureTenantId)
+      export ARM_CLIENT_ID=$(AzureServicePrincipleId)
+      export ARM_CLIENT_SECRET=$(AzureServicePrincipleKey)
+      export ARM_SUBSCRIPTION_ID=$(AzureSubscriptionId)
+      export ARM_TENANT_ID=$(AzureTenantId)
 
       #deploy terraform
-      terrafrom apply -auto-approve
+      terraform apply -auto-approve
     displayName: 'Authenticate to Azure'
     env:
       AzureServicePrincipleId: $(ARM_CLIENT_ID)
       AzureServicePrincipleKey: $(ARM_CLIENT_CLIENT_SECRET)
       AzureSubscriptionId: $(ARM_SUBSCRIPTION_ID)
       AzureTenantId: $(ARM_TENANT_ID)
-    workingDirectory:
+    workingDirectory: $(System.DefaultWorkingDirectory)
 
   
     
