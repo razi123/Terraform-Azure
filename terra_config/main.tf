@@ -14,6 +14,6 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "resource_group"{
-    name = var.my_resource_group_name
-    location = var.my_resource_group_location
+    name = "rg_benz"   #"var.my_resource_group_name"
+    location = "westeurope" # var.my_resource_group_location
 }
