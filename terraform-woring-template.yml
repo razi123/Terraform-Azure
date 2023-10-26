@@ -1,10 +1,10 @@
-# refresh credentials
+# Old Template CICD working
 
 trigger:
-  - master
-  
+- master
+
 pool:
-    vmImage: ubuntu-latest
+  vmImage: ubuntu-latest
 
 steps:
 
@@ -33,5 +33,5 @@ steps:
       AzureTenantId: $(ARM_TENANT_ID)
     workingDirectory: $(System.DefaultWorkingDirectory)/terra_config/
 
+  
     
-      
