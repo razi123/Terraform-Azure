@@ -39,6 +39,8 @@ stages:
           terraform plan 
           terraform apply
 
+
+    
 # old1
 # - stage: 'Terrafrom_Plan'
 #   jobs:
