@@ -8,17 +8,13 @@ stages:
 - stage: build_test
   jobs:
   - job: build_job
-    steps: 
-      - task: UsePythonVersion@0
-        inputs:
-          versionSpec: '3.9'
-        displayName: 'Use Python '3.9'
-      
+    steps:       
       - script: |
           sudo apt-get update
+          sudo apt install software-properties-common
+          sudo apt install python3.9
           # python3 -m venv venv
           # source ./venv/bin/activate
-          sudo apt install software-properties-common
           sudo apt install python3-pip 
           pip install checkov
         displayName: 'Requirements'
