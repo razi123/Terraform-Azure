@@ -7,11 +7,6 @@ terraform {
       version = "3.76.0"
     }
 
-    azuredevops = {
-      source = "microsoft/azuredevops"
-      version = "0.10.0"
-    }
-
     databricks = {
       source = "databricks/databricks"
       version = "1.0.0"
@@ -26,8 +21,6 @@ provider "azurerm" {
     skip_provider_registration = true
 }
 
-provider "azuredevops" {
-}
 provider "databricks" {
 
 }

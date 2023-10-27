@@ -6,29 +6,29 @@ variable "location" {
 }
 
 
-variable "client_id" {}
-variable "client_secret" {}
-variable "tenant_id" {}
+# variable "client_id" {}
+# variable "client_secret" {}
+# variable "tenant_id" {}
 
-variable "databricks_cluster_name" {
-  default = "test-cluster"
-}
+# variable "databricks_cluster_name" {
+#   default = "test-cluster"
+# }
 
 
-variable "spark_version" {
-  type    = string
-  default = "8.2.x-scala2.12"
-}
+# variable "spark_version" {
+#   type    = string
+#   default = "8.2.x-scala2.12"
+# }
 
-variable "driver_node_type_id" {
-  type    = string
-  default = "Standard_F4s"
-}
+# variable "driver_node_type_id" {
+#   type    = string
+#   default = "Standard_F4s"
+# }
 
-variable "node_type_id" {
-  type    = string
-  default = "Standard_F4s"
-}
+# variable "node_type_id" {
+#   type    = string
+#   default = "Standard_F4s"
+# }
 
 
 # variable "client_id" {
