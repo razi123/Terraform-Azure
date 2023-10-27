@@ -11,17 +11,15 @@ stages:
     steps:       
       - script: |
           sudo apt-get update
-          sudo apt install software-properties-common
-          sudo apt install python3.9
-          # python3 -m venv venv
-          # source ./venv/bin/activate
+          sudo apt-get install software-properties-common
+          sudo apt-get install python3.9
           sudo apt install python3-pip 
           pip install checkov
         displayName: 'Requirements'
         workingDirectory: $(System.DefaultWorkingDirectory)
 
       - script: |
-          terraform init -upgrade
+          terraform init -lockfile=readonly
           terraform validate
           terraform plan -out tf.plan
           terraform show -json tf.plan > tf.json
