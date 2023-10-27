@@ -10,3 +10,4 @@ module "databricks" {
   driver_node_type_id      = var.driver_node_type_id
   node_type_id             = var.node_type_id
 }
+
