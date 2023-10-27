@@ -25,7 +25,7 @@ stages:
         displayName: 'Terraform Validate'
         workingDirectory: $(System.DefaultWorkingDirectory)/
 
-      - task: AzureKeyVault@1
+      - task: AzureKeyVault@2
         inputs:
           azureSubscription: "service-connect-vault-access"
           KeyVaultName: 'my-secret-keys'
@@ -34,7 +34,7 @@ stages:
       
       - script: |
           az login
-          az account set --subscription subscription_id
+          az account set --subscription "7ca5fc28-3bbc-47b0-960d-4dba56edc701"
           az login --service-principal --username $(secrets.client-id) --password $(secrets.client-secret) --tenant $(secrets.tenant-id)
           terraform plan 
           terraform apply
