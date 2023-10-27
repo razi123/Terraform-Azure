@@ -19,11 +19,13 @@ stages:
         workingDirectory: $(System.DefaultWorkingDirectory)
 
       - script: |
-          terraform init -lockfile=readonly
+          terraform init -upgrade
           terraform validate
           terraform plan -out tf.plan
           terraform show -json tf.plan > tf.json
           checkov -f tf.json
+          cat tf.json
+          ls 
         displayName: 'Terraform Init and Validate'
         workingDirectory: $(System.DefaultWorkingDirectory)/terra_config/
 
