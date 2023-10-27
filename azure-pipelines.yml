@@ -27,7 +27,7 @@ stages:
 
       - task: AzureKeyVault@1
         inputs:
-          azureSubscription: "7ca5fc28-3bbc-47b0-960d-4dba56edc701"
+          azureSubscription: 7ca5fc28-3bbc-47b0-960d-4dba56edc701
           KeyVaultName: 'my-secret-keys'
           SecretsFilter: '*'
         displayName: 'Azure Key Vault Secrets'
