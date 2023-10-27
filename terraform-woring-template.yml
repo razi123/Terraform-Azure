@@ -12,7 +12,7 @@ steps:
     displayName: 'Run a one-line script'
 
   - script: |
-      terraform init
+      terraform init -update
       terraform validate
     displayName: 'Terraform Init and Validate'
     workingDirectory: $(System.DefaultWorkingDirectory)/terra_config/

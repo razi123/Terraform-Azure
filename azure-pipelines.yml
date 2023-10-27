@@ -1,37 +1,58 @@
-# refresh credentials
-
 trigger:
   - master
   
 pool:
     vmImage: ubuntu-latest
 
-steps:
+stages:
+- stage: build_test
+  jobs:
+  - job: build_job
+    steps: 
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: '3.9'
+        displayName: 'Use Python '3.9'
+      
+      - script: |
+          sudo apt-get update
+          # python3 -m venv venv
+          # source ./venv/bin/activate
+          sudo apt install software-properties-common
+          sudo apt install python3-pip 
+          pip install checkov
+        displayName: 'Requirements'
+        workingDirectory: $(System.DefaultWorkingDirectory)
 
-  - script: echo Hello, world!
-    displayName: 'Run a one-line script'
+      - script: |
+          terraform init -upgrade
+          terraform validate
+          terraform plan -out tf.plan
+          terraform show -json tf.plan > tf.json
+          checkov -f tf.json
+        displayName: 'Terraform Init and Validate'
+        workingDirectory: $(System.DefaultWorkingDirectory)/terra_config/
 
-  - script: |
-      terraform init
-      terraform validate
-    displayName: 'Terraform Init and Validate'
-    workingDirectory: $(System.DefaultWorkingDirectory)/terra_config/
+- stage: deploy_terraform
+  jobs:
+  - job: deploy
+    steps:
+      - script: |
+          export ARM_CLIENT_ID=$(AzureServicePrincipleId)
+          export ARM_CLIENT_SECRET=$(AzureServicePrincipleKey)
+          export ARM_SUBSCRIPTION_ID=$(AzureSubscriptionId)
+          export ARM_TENANT_ID=$(AzureTenantId)
 
-  - script: |
-      export ARM_CLIENT_ID=$(AzureServicePrincipleId)
-      export ARM_CLIENT_SECRET=$(AzureServicePrincipleKey)
-      export ARM_SUBSCRIPTION_ID=$(AzureSubscriptionId)
-      export ARM_TENANT_ID=$(AzureTenantId)
+          # deploy terraform
+          terraform apply -auto-approve
+        displayName: 'Authenticate to Azure'
+        env:
+          AzureServicePrincipleId: $(ARM_CLIENT_ID)
+          AzureServicePrincipleKey: $(ARM_CLIENT_SECRET)
+          AzureSubscriptionId: $(ARM_SUBSCRIPTION_ID)
+          AzureTenantId: $(ARM_TENANT_ID)
+        workingDirectory: $(System.DefaultWorkingDirectory)/terra_config/
 
-      # deploy terraform
-      terraform apply -auto-approve
-    displayName: 'Authenticate to Azure'
-    env:
-      AzureServicePrincipleId: $(ARM_CLIENT_ID)
-      AzureServicePrincipleKey: $(ARM_CLIENT_SECRET)
-      AzureSubscriptionId: $(ARM_SUBSCRIPTION_ID)
-      AzureTenantId: $(ARM_TENANT_ID)
-    workingDirectory: $(System.DefaultWorkingDirectory)/terra_config/
 
-    
+
       
