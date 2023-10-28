@@ -37,6 +37,7 @@ stages:
         displayName: 'Azure Key Vault Secrets'
 
       - script: |
+          az login --service-principal -u $(client-id) -p $(client-secret) --tenant $(tenant-id)
           export SECRET1=$(az keyvault secret show --name "client-id" --vault-name "kv-razi" --query 'value' -o tsv)
           export SECRET2=$(az keyvault secret show --name "client-secret" --vault-name "kv-razi" --query 'value' -o tsv)
           export SECRET2=$(az keyvault secret show --name "tenant-id" --vault-name "kv-razi" --query 'value' -o tsv)
