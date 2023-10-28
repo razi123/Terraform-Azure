@@ -37,15 +37,15 @@ stages:
         displayName: 'Azure Key Vault Secrets'
 
       - script: |
-          az login --service-principal -u $(client-id) -p $(client-secret) --tenant $(tenant-id)
-          export SECRET1=$(az keyvault secret show --name "client-id" --vault-name "kv-razi" --query 'value' -o tsv)
-          export SECRET2=$(az keyvault secret show --name "client-secret" --vault-name "kv-razi" --query 'value' -o tsv)
-          export SECRET2=$(az keyvault secret show --name "tenant-id" --vault-name "kv-razi" --query 'value' -o tsv)
+          #az login --service-principal -u $(client-id) -p $(client-secret) --tenant $(tenant-id)
+          echo "##vso[task.setvariable variable=CLIENT_ID]$(client-id)"
+          echo "##vso[task.setvariable variable=CLIENT_SECRET]$(client-secret)"
+          echo "##vso[task.setvariable variable=TENANT_ID]$(tenant-id)"
         displayName: 'Set Environment Variables'
 
       - script: |
-          echo "Using SECRET1: $SECRET1"
-          echo "Using SECRET2: $SECRET2"
+          echo "Using SECRET1: $CLIENT_ID"
+          echo "Using SECRET2: $CLIENT_SECRET"
         displayName: 'Use Environment Variables'
         
       - script: |
