@@ -49,10 +49,10 @@ stages:
         displayName: 'Use Environment Variables'
         
       # - script: |
-      #     export $(CLIENT_ID)=$(AzureServicePrincipleId)
-      #     export $(CLIENT_SECRET)=$(AzureServicePrincipleKey)
-      #     #export "7ca5fc28-3bbc-47b0-960d-4dba56edc701"=$(AzureSubscriptionId)
-      #     export $(TENANT_ID)=$(AzureTenantId)
+      #     export $(CLIENT_ID)=$(client-id)                   #$(AzureServicePrincipleId)
+      #     export $(CLIENT_SECRET)=$(client-secret)           #$(AzureServicePrincipleKey)
+      #                                                        #export "7ca5fc28-3bbc-47b0-960d-4dba56edc701"=$(AzureSubscriptionId)
+      #     export $(TENANT_ID)=$(tenant-id)                   #$(AzureTenantId)
 
       - script: |
           az login --service-principal -u $(client-id) -p $(client-secret) --tenant $(tenant-id)
@@ -73,9 +73,9 @@ stages:
         env:
            AzureServicePrincipleId: $(client-id)
            AzureServicePrincipleKey: $(client-secret)
-           AzureSubscriptionId: $("7ca5fc28-3bbc-47b0-960d-4dba56edc701")
+           AzureSubscriptionId: "7ca5fc28-3bbc-47b0-960d-4dba56edc701"
            AzureTenantId: $(tenant-id)
-        workingDirectory: $(System.DefaultWorkingDirectory)/terra_config/
+        workingDirectory: $(System.DefaultWorkingDirectory)/
 
 #- stage: 'Terrafrom_Plan'
 #  jobs:
