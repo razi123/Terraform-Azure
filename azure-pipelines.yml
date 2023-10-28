@@ -48,11 +48,11 @@ stages:
           echo "Using SECRET2: $TENANT_ID"
         displayName: 'Use Environment Variables'
         
-      - script: |
-          export $(CLIENT_ID)=$(client-id)                   #$(AzureServicePrincipleId)
-          export $(CLIENT_SECRET)=$(client-secret)           #$(AzureServicePrincipleKey)
-                                                             #export "7ca5fc28-3bbc-47b0-960d-4dba56edc701"=$(AzureSubscriptionId)
-          export $(TENANT_ID)=$(tenant-id)                   #$(AzureTenantId)
+      # - script: |
+      #     export $(CLIENT_ID)=$(client-id)                   #$(AzureServicePrincipleId)
+      #     export $(CLIENT_SECRET)=$(client-secret)           #$(AzureServicePrincipleKey)
+      #                                                        #export "7ca5fc28-3bbc-47b0-960d-4dba56edc701"=$(AzureSubscriptionId)
+      #     export $(TENANT_ID)=$(tenant-id)                   #$(AzureTenantId)
 
       - script: |
           az login --service-principal -u $(client-id) -p $(client-secret) --tenant $(tenant-id)
