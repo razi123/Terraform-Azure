@@ -46,13 +46,14 @@ stages:
       - script: |
           echo "Using SECRET1: $CLIENT_ID"
           echo "Using SECRET2: $CLIENT_SECRET"
+          echo "Using SECRET2: $TENANT_ID"
         displayName: 'Use Environment Variables'
         
       - script: |
-          export $(client-id)=$(AzureServicePrincipleId)
-          export $(client-secret)=$(AzureServicePrincipleKey)
-          export "7ca5fc28-3bbc-47b0-960d-4dba56edc701"=$(AzureSubscriptionId)
-          export $(tenant-id)=$(AzureTenantId)
+          export $(CLIENT_ID)=$(AzureServicePrincipleId)
+          export $(CLIENT_SECRET)=$(AzureServicePrincipleKey)
+          #export "7ca5fc28-3bbc-47b0-960d-4dba56edc701"=$(AzureSubscriptionId)
+          export $(TENANT_IDtenant-id)=$(AzureTenantId)
 
       - script: |
           terraform init
