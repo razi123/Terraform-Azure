@@ -28,7 +28,7 @@ stages:
       - task: AzureKeyVault@2
         inputs:
           azureSubscription: "service-connect-vault-access"
-          KeyVaultName: 'key-secret-razi' #'my-secret-keys'
+          KeyVaultName: 'key-secret-razi'  #'my-secret-keys'
           SecretsFilter: '*'
         displayName: 'Azure Key Vault Secrets'
       
