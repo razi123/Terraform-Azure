@@ -35,11 +35,20 @@ stages:
 
       - script: |
           terraform init
+        displayName: 'Terraform Init'
+        workingDirectory: $(System.DefaultWorkingDirectory)/
+
+    
+      - script: |
           terraform fmt
           terraform validate
-          terraform plan 
-          terraform apply
+          terraform plan -out=tfplan
         displayName: 'Terraform Validate'
+        workingDirectory: $(System.DefaultWorkingDirectory)/
+
+      - script: |
+          terraform apply
+        displayName: 'Terraform Run'
         workingDirectory: $(System.DefaultWorkingDirectory)/
 
       
