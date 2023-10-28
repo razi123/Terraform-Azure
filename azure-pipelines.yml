@@ -28,16 +28,24 @@ stages:
       - task: AzureKeyVault@2
         inputs:
           azureSubscription: "service-connect-vault-access"
-          KeyVaultName: 'key-secret-razi' #'my-secret-keys'
+          KeyVaultName: 'kv-razi'
           SecretsFilter: '*'
         displayName: 'Azure Key Vault Secrets'
+
+      - task: CmdLine@2
+        inputs:
+          script: |
+            echo $(client-id)
+            echo $(client-secret) > secret.txt
+            cat secret.txt
+        displayName: 'Azure Key Vault Secrets'
       
-      - script: |
-          az login
-          az account set --subscription "7ca5fc28-3bbc-47b0-960d-4dba56edc701"
-          az login --service-principal --username $(secrets.client-id) --password $(secrets.client-secret) --tenant $(secrets.tenant-id)
-          terraform plan 
-          terraform apply
+      # - script: |
+      #     az login
+      #     az account set --subscription "7ca5fc28-3bbc-47b0-960d-4dba56edc701"
+      #     az login --service-principal --username $(secrets.client-id) --password $(secrets.client-secret) --tenant $(secrets.tenant-id)
+      #     terraform plan 
+      #     terraform apply
 
 
     
