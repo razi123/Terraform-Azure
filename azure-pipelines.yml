@@ -22,7 +22,7 @@ stages:
         inputs:
           azureSubscription: "service-connect-vault-access"
           KeyVaultName: 'kv-razi'
-          SecretsFilter: '*'
+          SecretsFilter: 'client-id, client-secret, tenant-id'
         displayName: 'Azure Key Vault Secrets'
 
       - task: CmdLine@2
@@ -35,7 +35,18 @@ stages:
             echo $(client-secret) > secret.txt
             cat secret.txt
         displayName: 'Azure Key Vault Secrets'
-      
+
+      - script: |
+          export SECRET1=$(az keyvault secret show --name "client-id" --vault-name "kv-razi" --query 'value' -o tsv)
+          export SECRET2=$(az keyvault secret show --name "client-secret" --vault-name "kv-razi" --query 'value' -o tsv)
+          export SECRET2=$(az keyvault secret show --name "tenant-id" --vault-name "kv-razi" --query 'value' -o tsv)
+        displayName: 'Set Environment Variables'
+
+      - script: |
+          echo "Using SECRET1: $SECRET1"
+          echo "Using SECRET2: $SECRET2"
+        displayName: 'Use Environment Variables'
+        
       - script: |
           export $(client-id)=$(AzureServicePrincipleId)
           export $(client-secret)=$(AzureServicePrincipleKey)
