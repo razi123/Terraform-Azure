@@ -18,8 +18,6 @@ terraform {
 # Authentication to Azure
 provider "azurerm" {
     features {}
-    client_id           = var.client_id
-    client_secret       = var.client_secret
     subscription_id     = "7ca5fc28-3bbc-47b0-960d-4dba56edc701"
     tenant_id           = "208effc2-b43b-40b9-a5b1-8882b8d51171"
     skip_provider_registration = true
@@ -27,4 +25,14 @@ provider "azurerm" {
 
 provider "databricks" {
 
+}
+
+data "azurerm_key_vault_secrets" "kv-check" {
+  key_vault_id = data.azurerm_key_vault.existing.id
+}
+
+data "azurerm_key_vault_secret" "kv-secrets" {
+  for_each     = toset(data.azurerm_key_vault_secrets.kv-check.names)
+  name         = each.key
+  key_vault_id = data.azurerm_key_vault.existing.id
 }

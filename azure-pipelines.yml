@@ -11,10 +11,10 @@ stages:
     steps:       
       - script: |
           sudo apt-get update
-          sudo apt-get install software-properties-common
-          sudo apt-get install python3.9
-          sudo apt install python3-pip 
-          pip install checkov
+         # sudo apt-get install software-properties-common
+         # sudo apt-get install python3.9
+         # sudo apt install python3-pip 
+         # pip install checkov
         displayName: 'Requirements'
         workingDirectory: $(System.DefaultWorkingDirectory)
 
@@ -29,15 +29,23 @@ stages:
         inputs:
           script: |
             echo $(client-id)
+            echo $(client-secret)
+            echo $(tenant-id)
+
             echo $(client-secret) > secret.txt
             cat secret.txt
         displayName: 'Azure Key Vault Secrets'
+      
+      - script: |
+          export $(client-id)=$(AzureServicePrincipleId)
+          export $(client-secret)=$(AzureServicePrincipleKey)
+          export "7ca5fc28-3bbc-47b0-960d-4dba56edc701"=$(AzureSubscriptionId)
+          export $(tenant-id)=$(AzureTenantId)
 
       - script: |
           terraform init
         displayName: 'Terraform Init'
         workingDirectory: $(System.DefaultWorkingDirectory)/
-
     
       - script: |
           terraform fmt
@@ -47,18 +55,14 @@ stages:
         workingDirectory: $(System.DefaultWorkingDirectory)/
 
       - script: |
-          terraform apply
+          terraform apply -auto-approve
         displayName: 'Terraform Run'
-        workingDirectory: $(System.DefaultWorkingDirectory)/
-
-      
-      # - script: |
-      #     az login
-      #     az account set --subscription "7ca5fc28-3bbc-47b0-960d-4dba56edc701"
-      #     az login --service-principal --username $(secrets.client-id) --password $(secrets.client-secret) --tenant $(secrets.tenant-id)
-      #     terraform plan 
-      #     terraform apply
-
+        env:
+           AzureServicePrincipleId: $(client-id)
+           AzureServicePrincipleKey: $(client-secret)
+           AzureSubscriptionId: $("7ca5fc28-3bbc-47b0-960d-4dba56edc701")
+           AzureTenantId: $(tenant-id)
+        workingDirectory: $(System.DefaultWorkingDirectory)/terra_config/
 
 #- stage: 'Terrafrom_Plan'
 #  jobs:
