@@ -1,8 +1,14 @@
 variable "resource_group_name" {
-  default = "benz_rg"
+  type = object({
+    name = "westeurope"
+  })
 }
+
 variable "location" {
-  default = "westeurope"
+  type = object({
+    name = "westeurope"
+  })
+  
 }
 
 
