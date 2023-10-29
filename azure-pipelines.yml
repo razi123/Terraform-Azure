@@ -29,7 +29,14 @@ stages:
           az login --service-principal -u $(client-id) -p $(client-secret) --tenant $(tenant-id)
         displayName: 'Azure authenticate'
         workingDirectory: $(System.DefaultWorkingDirectory)/
-    
+     
+     - script: |
+          export TF_VAR_DATABRICKS_AZURE_CLIENT_ID=$(client-id)
+          export TF_VAR_DATABRICKS_AZURE_CLIENT_SECRET=$(client-secret)
+          export TF_VAR_DATABRICKS_AZURE_TENANT_ID=$(tenant-id) 
+        displayName: 'Azure export'
+        workingDirectory: $(System.DefaultWorkingDirectory)/
+       
       - script: |
           terraform init -upgrade
           terraform fmt
@@ -37,16 +44,17 @@ stages:
           terraform plan -out=tfplan
         displayName: 'Terraform Validate'
         workingDirectory: $(System.DefaultWorkingDirectory)/
+        env:
+          TF_VAR_DATABRICKS_AZURE_CLIENT_ID: $(client-id)
+          TF_VAR_DATABRICKS_AZURE_CLIENT_SECRET: $(client-secret)
+          TF_VAR_DATABRICKS_AZURE_TENANT_ID: $(tenant-id)
 
       - script: |
           terraform apply -auto-approve
-        displayName: 'Terraform Run'
-
-    
-      - task: PublishBuildArtifacts@1
-        displayName: Publish Secrets File
-        inputs:
-          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-          ArtifactName: 'drop'
-          publishLocation: 'Container'
-   
+        displayName: 'Terraform'
+        displayName: 'Terraform Validate'
+        workingDirectory: $(System.DefaultWorkingDirectory)/
+        env:
+          TF_VAR_DATABRICKS_AZURE_CLIENT_ID: $(client-id)
+          TF_VAR_DATABRICKS_AZURE_CLIENT_SECRET: $(client-secret)
+          TF_VAR_DATABRICKS_AZURE_TENANT_ID: $(tenant-id)
