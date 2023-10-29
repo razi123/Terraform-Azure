@@ -42,12 +42,12 @@ resource "databricks_instance_pool" "pool" {
     idle_instance_autotermination_minutes = 10
 }
 
-resource "databricks_token" "pat" {
-  provider = databricks.created_workspace
-  comment  = "Terraform Provisioning"
-  // 10 day token
-  lifetime_seconds = 864000
-}
+# resource "databricks_token" "pat" {
+#   provider = databricks.created_workspace
+#   comment  = "Terraform Provisioning"
+#   // 10 day token
+#   lifetime_seconds = 864000
+# }
 
 # define databricks cluster
 resource "databricks_cluster" "cluster_conf" {
