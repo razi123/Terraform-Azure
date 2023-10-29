@@ -16,9 +16,9 @@ variable "DATABRICKS_TOKEN" {
 }
 
 
-# variable "client_id" {}
-# variable "client_secret" {}
-# variable "tenant_id" {}
+variable "client_id" {}
+variable "client_secret" {}
+variable "tenant_id" {}
 
 # variable "databricks_cluster_name" {
 #   default = "test-cluster"

@@ -32,9 +32,9 @@ stages:
         workingDirectory: $(System.DefaultWorkingDirectory)/
      
       - script: |
-          export TF_VAR_DATABRICKS_AZURE_CLIENT_ID=$(client-id)
-          export TF_VAR_DATABRICKS_AZURE_CLIENT_SECRET=$(client-secret)
-          export TF_VAR_DATABRICKS_AZURE_TENANT_ID=$(tenant-id) 
+          export ARM_CLIENT_ID=$(client-id)
+          export ARM_CLIENT_SECRET=$(client-secret)
+          export ARM_TENANT_ID=$(tenant-id) 
         displayName: 'Azure export'
         workingDirectory: $(System.DefaultWorkingDirectory)/
        
@@ -64,6 +64,6 @@ stages:
         displayName: 'Terraform run'
         workingDirectory: $(System.DefaultWorkingDirectory)/
         env:
-          TF_VAR_DATABRICKS_AZURE_CLIENT_ID: $(client-id)
-          TF_VAR_DATABRICKS_AZURE_CLIENT_SECRET: $(client-secret)
-          TF_VAR_DATABRICKS_AZURE_TENANT_ID: $(tenant-id)
+          ARM_CLIENT_ID: $(client-id)
+          ARM_CLIENT_SECRET: $(client-secret)
+          ARM_TENANT_ID: $(tenant-id)
