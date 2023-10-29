@@ -22,5 +22,6 @@ provider "azurerm" {
 }
 
 provider "databricks" {
+  host = azurerm_databricks_workspace.DB_workspace.workspace_url
   azure_workspace_resource_id = azurerm_databricks_workspace.DB_workspace.id
 }
