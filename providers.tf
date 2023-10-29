@@ -22,7 +22,9 @@ provider "azurerm" {
 }
 
 provider "databricks" {
-  host = azurerm_databricks_workspace.DB_workspace.workspace_url
+  alias      = "azure_account"
+  host       = "https://accounts.azuredatabricks.net"
+  #workspace_url = azurerm_databricks_workspace.DB_workspace.workspace_url
   azure_workspace_resource_id = azurerm_databricks_workspace.DB_workspace.id
-  #token = var.DATABRICKS_TOKEN
+  auth_type = "azure-cli"
 }
