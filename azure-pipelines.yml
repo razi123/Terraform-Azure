@@ -11,6 +11,7 @@ stages:
     steps:       
       - script: |
           sudo apt-get update
+          pip install databricks-cli
          # sudo apt-get install software-properties-common
          # sudo apt-get install python3.9
          # sudo apt install python3-pip 
@@ -46,19 +47,16 @@ stages:
         workingDirectory: $(System.DefaultWorkingDirectory)/
       
       - script: |
-          curl -X POST -H 'Content-Type: application/x-www-form-urlencoded' \
-          https://login.microsoftonline.com/$(tenant-id)/oauth2/v2.0/token \
-          -d 'client_id=$(client-id) \
-          -d 'grant_type=client_credentials' \
-          -d 'scope=2ff814a6-3304-4ab8-85cb-cd0e6f879c1d%2F.default' \
-          -d 'client_secret=$(client-secret)'
-        displayName: 'Databricks_ validate'
+          databricks_token=$(databricks tokens create --comment "CI/CD Token" --lifetime-seconds 3600 --scope "api")
+          cat $(databricks_token)
+          export TF_VAR_DATABRICKS_TOKEN=$databricks_token
+        displayName: 'Databricks Validate'
         workingDirectory: $(System.DefaultWorkingDirectory)
 
       - script: |
-          $accessToken = $(az account get-access-token --resource 2ff814a6-3304-4ab8-85cb-cd0e6f879c1d --query "accessToken" --output tsv)
-          echo "##vso[task.setvariable variable=TF_VAR_DATABRICKS_TOKEN;issecret=true]$accessToken"
-          terraform apply -auto-approve
+          #terraform apply -auto-approve
+          terraform apply -var "DATABRICKS_TOKEN=$(databricks_token)" -auto-approve
+
         displayName: 'Terraform run'
         workingDirectory: $(System.DefaultWorkingDirectory)/
         env:
