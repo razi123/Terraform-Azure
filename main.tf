@@ -11,7 +11,6 @@
 #   node_type_id             = var.node_type_id
 # }
 
-
 # add Resource Group
 resource "azurerm_resource_group" "resource_group"{
     name = "benz_rg"
