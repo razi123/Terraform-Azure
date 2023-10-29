@@ -20,6 +20,13 @@ resource "azurerm_resource_group" "resource_group"{
 data "azurerm_client_config" "current" {
 }
 
+# resource "databricks_service_principal" "sp" {
+#   application_id       = "81039d54-e89a-4794-a379-e0229c6c0982"
+#   display_name         = "benz"
+#   allow_cluster_create = true
+# }
+
+
 # add datbricks workspace
 resource "azurerm_databricks_workspace" "DB_workspace" {
   name                = "databricks-workspace-dev"
@@ -30,16 +37,18 @@ resource "azurerm_databricks_workspace" "DB_workspace" {
   #pblic_network_access_enabled = false
 }
 
-data "databricks_group" "admins" {
-  display_name = "admins"
-  depends_on = [azurerm_databricks_workspace.DB_workspace]
+resource "databricks_user" "my-user" {
+  user_name    = "raziuddinkhazi@gmail.com"
+  display_name = "Test User"
 }
 
-resource "databricks_service_principal" "sp" {
-  application_id       = "81039d54-e89a-4794-a379-e0229c6c0982"
-  display_name         = "benz"
-  allow_cluster_create = true
-}
+
+# data "databricks_group" "admins" {
+#   display_name = "admins"
+#   depends_on = [azurerm_databricks_workspace.DB_workspace]
+# }
+
+
 
 data "databricks_node_type" "smallest" {
 }
