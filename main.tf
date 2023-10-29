@@ -27,7 +27,26 @@ resource "azurerm_databricks_workspace" "DB_workspace" {
   location            = azurerm_resource_group.resource_group.location
   sku                 = "standard"
   managed_resource_group_name = "managed-resource-group-databricks"
-  #public_network_access_enabled = false
+  #pblic_network_access_enabled = false
+}
+
+data "databricks_node_type" "smallest" {
+}
+
+resource "databricks_instance_pool" "pool" {
+    instance_pool_name = "Smallest Nodes"
+    min_idle_instances = 0
+    max_capacity       = 10
+    node_type_id       = data.databricks_node_type.smallest.id
+
+    idle_instance_autotermination_minutes = 10
+}
+
+resource "databricks_token" "pat" {
+  provider = databricks.created_workspace
+  comment  = "Terraform Provisioning"
+  // 10 day token
+  lifetime_seconds = 864000
 }
 
 # define databricks cluster
@@ -38,4 +57,8 @@ resource "databricks_cluster" "cluster_conf" {
   node_type_id            = "Standard_F4s"
   num_workers             = 1
   autotermination_minutes = 10
+
+  spark_conf = {
+    "spark.databricks.io.cache.enabled" : true
+  }
 }

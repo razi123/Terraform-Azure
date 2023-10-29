@@ -46,17 +46,17 @@ stages:
         displayName: 'Terraform Validate'
         workingDirectory: $(System.DefaultWorkingDirectory)/
       
-      - script: |
-          databricks configure --token
-          databricks_token=$(databricks tokens create --comment "CI/CD Token" --lifetime-seconds 3600)
-          echo $databricks_token
-          export DATABRICKS_TOKEN=$databricks_token
-        displayName: 'Databricks Validate'
-        workingDirectory: $(System.DefaultWorkingDirectory)
+      # - script: |
+      #     #databricks configure --token
+      #     #databricks_token=$(databricks tokens create --comment "CI/CD Token" --lifetime-seconds 3600)
+      #     echo $databricks_token
+      #     export DATABRICKS_TOKEN=$databricks_token
+      #   displayName: 'Databricks Validate'
+      #   workingDirectory: $(System.DefaultWorkingDirectory)
 
       - script: |
           #terraform apply tfplan -auto-approve
-          terraform apply -var "DATABRICKS_TOKEN=$(databricks_token)" -auto-approve
+          terraform apply -auto-approve
 
         displayName: 'Terraform run'
         workingDirectory: $(System.DefaultWorkingDirectory)/
