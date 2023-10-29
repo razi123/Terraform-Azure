@@ -45,6 +45,10 @@ stages:
           terraform plan -out=tfplan
         displayName: 'Terraform Validate'
         workingDirectory: $(System.DefaultWorkingDirectory)/
+        env:
+          ARM_CLIENT_ID: $(client-id)
+          ARM_CLIENT_SECRET: $(client-secret)
+          ARM_TENANT_ID: $(tenant-id)
       
       # - script: |
       #     #databricks configure --token
