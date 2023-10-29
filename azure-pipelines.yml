@@ -47,6 +47,7 @@ stages:
         workingDirectory: $(System.DefaultWorkingDirectory)/
       
       - script: |
+          databricks configure --token
           databricks_token=$(databricks tokens create --comment "CI/CD Token" --lifetime-seconds 3600)
           echo $databricks_token
           export DATABRICKS_TOKEN=$databricks_token
