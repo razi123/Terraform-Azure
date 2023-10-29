@@ -32,6 +32,7 @@ resource "azurerm_databricks_workspace" "DB_workspace" {
 
 data "databricks_group" "admins" {
   display_name = "admins"
+  depends_on = [azurerm_databricks_workspace.DB_workspace]
 }
 
 resource "databricks_service_principal" "sp" {
