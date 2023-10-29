@@ -30,7 +30,7 @@ stages:
         displayName: 'Azure authenticate'
         workingDirectory: $(System.DefaultWorkingDirectory)/
      
-     - script: |
+      - script: |
           export TF_VAR_DATABRICKS_AZURE_CLIENT_ID=$(client-id)
           export TF_VAR_DATABRICKS_AZURE_CLIENT_SECRET=$(client-secret)
           export TF_VAR_DATABRICKS_AZURE_TENANT_ID=$(tenant-id) 
@@ -51,8 +51,7 @@ stages:
 
       - script: |
           terraform apply -auto-approve
-        displayName: 'Terraform'
-        displayName: 'Terraform Validate'
+        displayName: 'Terraform run'
         workingDirectory: $(System.DefaultWorkingDirectory)/
         env:
           TF_VAR_DATABRICKS_AZURE_CLIENT_ID: $(client-id)
