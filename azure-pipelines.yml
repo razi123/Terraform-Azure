@@ -48,13 +48,13 @@ stages:
       
       - script: |
           databricks_token=$(databricks tokens create --comment "CI/CD Token" --lifetime-seconds 3600)
-          cat $(databricks_token)
-          export TF_VAR_DATABRICKS_TOKEN=$databricks_token
+          echo $databricks_token
+          export DATABRICKS_TOKEN=$databricks_token
         displayName: 'Databricks Validate'
         workingDirectory: $(System.DefaultWorkingDirectory)
 
       - script: |
-          #terraform apply -auto-approve
+          #terraform apply tfplan -auto-approve
           terraform apply -var "DATABRICKS_TOKEN=$(databricks_token)" -auto-approve
 
         displayName: 'Terraform run'
