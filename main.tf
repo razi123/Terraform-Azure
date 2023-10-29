@@ -35,7 +35,9 @@ data "databricks_group" "admins" {
 }
 
 resource "databricks_service_principal" "sp" {
-  application_id = "81039d54-e89a-4794-a379-e0229c6c0982"
+  application_id       = "81039d54-e89a-4794-a379-e0229c6c0982"
+  display_name         = "benz"
+  allow_cluster_create = true
 }
 
 data "databricks_node_type" "smallest" {
@@ -57,11 +59,7 @@ resource "databricks_instance_pool" "pool" {
 #   lifetime_seconds = 864000
 # }
 
-resource "databricks_service_principal" "sp" {
-  application_id       = "81039d54-e89a-4794-a379-e0229c6c0982"
-  display_name         = "benz"
-  allow_cluster_create = true
-}
+
 
 # define databricks cluster
 resource "databricks_cluster" "cluster_conf" {
