@@ -44,10 +44,16 @@ stages:
           terraform plan -out=tfplan
         displayName: 'Terraform Validate'
         workingDirectory: $(System.DefaultWorkingDirectory)/
-        env:
-          TF_VAR_DATABRICKS_AZURE_CLIENT_ID: $(client-id)
-          TF_VAR_DATABRICKS_AZURE_CLIENT_SECRET: $(client-secret)
-          TF_VAR_DATABRICKS_AZURE_TENANT_ID: $(tenant-id)
+      
+      - script: |
+          curl -X POST -H 'Content-Type: application/x-www-form-urlencoded' \
+          https://login.microsoftonline.com/$(tenant-id)/oauth2/v2.0/token \
+          -d 'client_id=$(client-id) \
+          -d 'grant_type=client_credentials' \
+          -d 'scope=2ff814a6-3304-4ab8-85cb-cd0e6f879c1d%2F.default' \
+          -d 'client_secret=$(client-secret)'
+        displayName: 'Databricks_ validate'
+        workingDirectory: $(System.DefaultWorkingDirectory)
 
       - script: |
           $accessToken = $(az account get-access-token --resource 2ff814a6-3304-4ab8-85cb-cd0e6f879c1d --query "accessToken" --output tsv)
