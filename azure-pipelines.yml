@@ -11,7 +11,7 @@ stages:
     steps:       
       - script: |
           sudo apt-get update
-          pip install databricks-cli
+          pip install --upgrade databricks-cli
          # sudo apt-get install software-properties-common
          # sudo apt-get install python3.9
          # sudo apt install python3-pip 
@@ -47,7 +47,7 @@ stages:
         workingDirectory: $(System.DefaultWorkingDirectory)/
       
       - script: |
-          databricks_token=$(databricks tokens create --comment "CI/CD Token" --lifetime-seconds 3600 --scope "api")
+          databricks_token=$(databricks tokens create --comment "CI/CD Token" --lifetime-seconds 3600)
           cat $(databricks_token)
           export TF_VAR_DATABRICKS_TOKEN=$databricks_token
         displayName: 'Databricks Validate'
