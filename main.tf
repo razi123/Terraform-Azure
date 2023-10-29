@@ -27,7 +27,7 @@ resource "azurerm_databricks_workspace" "DB_workspace" {
   location            = azurerm_resource_group.resource_group.location
   sku                 = "standard"
   managed_resource_group_name = "managed-resource-group-databricks"
-  public_network_access_enabled = false
+  #public_network_access_enabled = false
 }
 
 # define databricks cluster
