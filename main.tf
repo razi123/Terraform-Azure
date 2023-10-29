@@ -49,7 +49,6 @@ resource "databricks_user" "my-user" {
 # }
 
 
-
 data "databricks_node_type" "smallest" {
 }
 
