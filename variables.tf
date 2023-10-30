@@ -10,10 +10,10 @@ variable "location" {
   default = "westeurope"
   }
 
-variable "DATABRICKS_TOKEN" {
-  description = "Databricks Management API Token"
-  default     = "your-databricks-token-value"
-}
+# variable "DATABRICKS_TOKEN" {
+#   description = "Databricks Management API Token"
+#   default     = "your-databricks-token-value"
+# }
 
 
 # variable "client_id" {}

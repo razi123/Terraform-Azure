@@ -1,3 +1,8 @@
+module "storage" {
+  source = "./modules/storage"
+  
+}
+
 # module "databricks" {
 #   source                   = "./modules/databricks"
 #   resource_group_name = var.resource_group_name
@@ -11,30 +16,31 @@
 #   node_type_id             = var.node_type_id
 # }
 
-# add Resource Group
-resource "azurerm_resource_group" "resource_group"{
-    name = "benz_rg"
-    location = "westeurope"
-}
+# # add Resource Group
+# resource "azurerm_resource_group" "resource_group"{
+#     name = "benz_rg"
+#     location = "westeurope"
+    
+# }
 
 
-# add datbricks workspace
-resource "azurerm_databricks_workspace" "DB_workspace" {
-  name                = "databricks-workspace-dev"
-  resource_group_name = azurerm_resource_group.resource_group.name
-  location            = azurerm_resource_group.resource_group.location
-  sku                 = "standard"
-  managed_resource_group_name = "managed-resource-group-databricks"
-  #pblic_network_access_enabled = false
-}
+# # add datbricks workspace
+# resource "azurerm_databricks_workspace" "DB_workspace" {
+#   name                = "databricks-workspace-dev"
+#   resource_group_name = azurerm_resource_group.resource_group.name
+#   location            = azurerm_resource_group.resource_group.location
+#   sku                 = "standard"
+#   managed_resource_group_name = "managed-resource-group-databricks"
+#   #pblic_network_access_enabled = false
+# }
 
-// create PAT token to provision entities within workspace
-resource "databricks_token" "pat" {
-  provider = databricks
-  comment  = "Terraform Provisioning"
-  // 100 day token
-  lifetime_seconds = 864000
-}
+# // create PAT token to provision entities within workspace
+# resource "databricks_token" "pat" {
+#   provider = databricks
+#   comment  = "Terraform Provisioning"
+#   // 100 day token
+#   lifetime_seconds = 864000
+# }
 
 # data "databricks_group" "admins" {
 #   display_name = "admins"
@@ -73,16 +79,16 @@ resource "databricks_token" "pat" {
 
 
 
-#define databricks cluster
-resource "databricks_cluster" "cluster_conf" {
-  cluster_name            = "test-cluster"
-  spark_version           = "8.2.x-scala2.12"
-  driver_node_type_id     = "Standard_F4s"
-  node_type_id            = "Standard_F4s"
-  num_workers             = 1
-  autotermination_minutes = 10
+# #define databricks cluster
+# resource "databricks_cluster" "cluster_conf" {
+#   cluster_name            = "test-cluster"
+#   spark_version           = "8.2.x-scala2.12"
+#   driver_node_type_id     = "Standard_F4s"
+#   node_type_id            = "Standard_F4s"
+#   num_workers             = 1
+#   autotermination_minutes = 10
 
-  spark_conf = {
-    "spark.databricks.io.cache.enabled" : true
-  }
-}
+#   spark_conf = {
+#     "spark.databricks.io.cache.enabled" : true
+#   }
+# }
