@@ -17,9 +17,6 @@ resource "azurerm_resource_group" "resource_group"{
     location = "westeurope"
 }
 
-# data "azurerm_client_config" "current" {
-# }
-
 
 # add datbricks workspace
 resource "azurerm_databricks_workspace" "DB_workspace" {
@@ -31,21 +28,29 @@ resource "azurerm_databricks_workspace" "DB_workspace" {
   #pblic_network_access_enabled = false
 }
 
-data "databricks_group" "admins" {
-  display_name = "admins"
-  depends_on = [azurerm_databricks_workspace.DB_workspace]
+// create PAT token to provision entities within workspace
+resource "databricks_token" "pat" {
+  provider = databricks
+  comment  = "Terraform Provisioning"
+  // 100 day token
+  lifetime_seconds = 864000
 }
 
-resource "databricks_service_principal" "sp" {
-  application_id       = "81039d54-e89a-4794-a379-e0229c6c0982"
-  display_name         = "Service principal"
-  allow_cluster_create = true
-}
+# data "databricks_group" "admins" {
+#   display_name = "admins"
+#   depends_on = [azurerm_databricks_workspace.DB_workspace]
+# }
 
-resource "databricks_group_member" "i-am-admin" {
-  group_id  = data.databricks_group.admins.id
-  member_id = databricks_service_principal.sp.id
-}
+# resource "databricks_service_principal" "sp" {
+#   application_id       = "81039d54-e89a-4794-a379-e0229c6c0982"
+#   display_name         = "Service principal"
+#   allow_cluster_create = true
+# }
+
+# resource "databricks_group_member" "i-am-admin" {
+#   group_id  = data.databricks_group.admins.id
+#   member_id = databricks_service_principal.sp.id
+# }
 
 # data "databricks_node_type" "smallest" {
 # }
