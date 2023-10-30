@@ -32,9 +32,9 @@ stages:
         workingDirectory: $(System.DefaultWorkingDirectory)/
      
       - script: |
-          # export ARM_CLIENT_ID=$client-id
-          # export ARM_CLIENT_SECRET=$client-secret
-          # export ARM_TENANT_ID=$tenant-id 
+          export TF_VAR_ARM_CLIENT_ID=$client-id
+          export TF_VAR_ARM_CLIENT_SECRET=$client-secret
+          export TF_VAR_ARM_TENANT_ID=$tenant-id 
 
           terraform init -upgrade
           terraform fmt

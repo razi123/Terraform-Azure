@@ -17,8 +17,8 @@ resource "azurerm_resource_group" "resource_group"{
     location = "westeurope"
 }
 
-data "azurerm_client_config" "current" {
-}
+# data "azurerm_client_config" "current" {
+# }
 
 # resource "databricks_service_principal" "sp" {
 #   application_id       = "81039d54-e89a-4794-a379-e0229c6c0982"
@@ -27,15 +27,15 @@ data "azurerm_client_config" "current" {
 # }
 
 
-# # add datbricks workspace
-# resource "azurerm_databricks_workspace" "DB_workspace" {
-#   name                = "databricks-workspace-dev"
-#   resource_group_name = azurerm_resource_group.resource_group.name
-#   location            = azurerm_resource_group.resource_group.location
-#   sku                 = "standard"
-#   managed_resource_group_name = "managed-resource-group-databricks"
-#   #pblic_network_access_enabled = false
-# }
+# add datbricks workspace
+resource "azurerm_databricks_workspace" "DB_workspace" {
+  name                = "databricks-workspace-dev"
+  resource_group_name = azurerm_resource_group.resource_group.name
+  location            = azurerm_resource_group.resource_group.location
+  sku                 = "standard"
+  managed_resource_group_name = "managed-resource-group-databricks"
+  #pblic_network_access_enabled = false
+}
 
 # resource "databricks_user" "my-user" {
 #   user_name    = "raziuddinkhazi@gmail.com"
