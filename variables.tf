@@ -1,14 +1,14 @@
 variable "resource_group_name" {
   description = "Name of the Azure Resource Group"
   type        = string
-  default = "benz_rg"
-  }
+  default     = "benz_rg"
+}
 
 variable "location" {
   description = "Location of the Azure Resource Group"
   type        = string
-  default = "westeurope"
-  }
+  default     = "westeurope"
+}
 
 # variable "DATABRICKS_TOKEN" {
 #   description = "Databricks Management API Token"

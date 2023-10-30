@@ -1,6 +1,7 @@
-module "storage" {
-  source = "./modules/storage"
-  
+module "azure_storage" {
+  source              = "./modules/storage"
+  resource_group_name = var.resource_group_name
+  location            = var.location
 }
 
 # module "databricks" {
@@ -20,7 +21,7 @@ module "storage" {
 # resource "azurerm_resource_group" "resource_group"{
 #     name = "benz_rg"
 #     location = "westeurope"
-    
+
 # }
 
 
