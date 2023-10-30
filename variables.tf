@@ -7,7 +7,7 @@ variable "resource_group_name_commons" {
 variable "storage_account_name_commons" {
   description = "Name of the Azure storage account commons"
   type        = string
-  default     = "flow-storage-commons"
+  default     = "flowstoragecommons"
 }
 
 variable "location" {
