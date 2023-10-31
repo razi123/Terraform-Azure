@@ -58,7 +58,7 @@ stages:
       - script: |
           terraform apply tfplan -auto-approve
 
-          displayName: 'Terraform run'
+        displayName: 'Terraform run'
         workingDirectory: $(System.DefaultWorkingDirectory)/
         # env:
         #   ARM_CLIENT_ID: $(client-id)
