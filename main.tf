@@ -1,3 +1,6 @@
+variable resource_group_name {}
+variable location {} 
+
 module "databricks" {
   source              = "./modules/databricks"
   resource_group_name = var.resource_group_name
