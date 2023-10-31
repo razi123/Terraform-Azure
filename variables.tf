@@ -2,27 +2,11 @@ variable "resource_group_name" {
   default = "flow-emea-RG"
 }
 
-variable "databricks_cluster_name" {
-  default = "test-emea-cluster"
+variable "location" {
+  description = "Location of the Azure Resource Group"
+  type        = string
+  default     = "westeurope"
 }
-
-variable "spark_version" {
-  type    = string
-  default = "8.2.x-scala2.12"
-}
-
-variable "driver_node_type_id" {
-  type    = string
-  default = "Standard_F4s"
-}
-
-variable "node_type_id" {
-  type    = string
-  default = "Standard_F4s"
-}
-
-
-
 
 # variable "client_id" {
 #   default = "81039d54-e89a-4794-a379-e0229c6c0982"
@@ -38,14 +22,3 @@ variable "node_type_id" {
 
 # variable "tenant_id" {
 #   default = "208effc2-b43b-40b9-a5b1-8882b8d51171"
-
-# variable "DATABRICKS_TOKEN" {
-#   description = "Databricks Management API Token"
-#   default     = "your-databricks-token-value"
-# }
-
-
-# variable "client_id" {}
-# variable "client_secret" {}
-# variable "tenant_id" {}
-

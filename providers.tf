@@ -22,6 +22,6 @@ provider "azurerm" {
 }
 
 provider "databricks" {
-  host = "https://accounts.azuredatabricks.net"
+  host = azurerm_databricks_workspace.DB_workspace.workspace_url
 
 }
