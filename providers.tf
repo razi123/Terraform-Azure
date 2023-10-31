@@ -13,6 +13,14 @@ terraform {
     }
 
   }
+
+  backend "azurerm" {
+    resource_group_name   = "security-RG"
+    storage_account_name  = "status2tform"
+    container_name        = "remotestate"
+    key                   = "terraform.tfstate" 
+}
+
 }
 
 
