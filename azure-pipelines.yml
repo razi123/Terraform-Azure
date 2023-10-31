@@ -5,7 +5,7 @@ pool:
     vmImage: ubuntu-latest
 
 stages:
-- stage: build_test
+- stage: Terraform_Plan
   jobs:
   - job: build_job
     steps:       
@@ -30,20 +30,22 @@ stages:
           az login --service-principal -u $(client-id) -p $(client-secret) --tenant $(tenant-id)
         displayName: 'Azure authenticate'
         workingDirectory: $(System.DefaultWorkingDirectory)/
-     
-      - script: |
-          echo $(tenant-id)
-          echo $(client-secret)
-          echo $(tfstate-storage-key)
 
+      - script: |
           terraform init -backend-config="access_key=$(tfstate-storage-key)"
+        displayName: 'Terraform initialization'
+     
+      - script: |          
           terraform fmt
           terraform validate
           terraform plan -out=tfplan
-        displayName: 'Export Terraform Validate'
+        displayName: 'Terraform Validate'
         workingDirectory: $(System.DefaultWorkingDirectory)/
 
       - script: |
-          terraform apply -auto-approve tfplan
-        displayName: 'Terraform run'
+          if [ "$(Builda.Reason)" == "PullRequest" ] && [ "$(Build.ReasonCode)" -eq "2" ]; then
+            terraform apply -auto-approve tfplan
+          else
+            echo "Skipping terraform apply because PR is not yet accepted"
+        displayName: 'Terraform run on PR'
         workingDirectory: $(System.DefaultWorkingDirectory)/
