@@ -56,7 +56,8 @@ stages:
       #   workingDirectory: $(System.DefaultWorkingDirectory)
 
       - script: |
-          terraform apply tfplan -auto-approve
+          terraform apply -auto-approve tfplan
+          #terraform apply -auto-approve
 
         displayName: 'Terraform run'
         workingDirectory: $(System.DefaultWorkingDirectory)/
