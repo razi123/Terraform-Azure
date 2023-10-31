@@ -19,22 +19,22 @@ stages:
         displayName: 'Requirements'
         workingDirectory: $(System.DefaultWorkingDirectory)
 
-      - task: AzureKeyVault@2
-        inputs:
-          azureSubscription: "service-connect-vault-access"
-          KeyVaultName: 'kv-razi'
-          SecretsFilter: 'client-id, client-secret, tenant-id'
-        displayName: 'Azure Key Vault Secrets'
+      # - task: AzureKeyVault@2
+      #   inputs:
+      #     azureSubscription: "service-connect-vault-access"
+      #     KeyVaultName: 'kv-razi'
+      #     SecretsFilter: 'client-id, client-secret, tenant-id'
+      #   displayName: 'Azure Key Vault Secrets'
 
-      - script: |
-          az login --service-principal -u $(client-id) -p $(client-secret) --tenant $(tenant-id)
-        displayName: 'Azure authenticate'
-        workingDirectory: $(System.DefaultWorkingDirectory)/
+      # - script: |
+      #     az login --service-principal -u $(client-id) -p $(client-secret) --tenant $(tenant-id)
+      #   displayName: 'Azure authenticate'
+      #   workingDirectory: $(System.DefaultWorkingDirectory)/
      
       - script: |
-          export TF_VAR_ARM_CLIENT_ID=$client-id
-          export TF_VAR_ARM_CLIENT_SECRET=$client-secret
-          export TF_VAR_ARM_TENANT_ID=$tenant-id 
+          # export TF_VAR_ARM_CLIENT_ID=$client-id
+          # export TF_VAR_ARM_CLIENT_SECRET=$client-secret
+          # export TF_VAR_ARM_TENANT_ID=$tenant-id 
 
           terraform init -upgrade
           terraform fmt
@@ -47,21 +47,12 @@ stages:
         #   ARM_CLIENT_SECRET: $(client-secret)
         #   ARM_TENANT_ID: $(tenant-id)
       
-      # - script: |
-      #     #databricks configure --token
-      #     #databricks_token=$(databricks tokens create --comment "CI/CD Token" --lifetime-seconds 3600)
-      #     echo $databricks_token
-      #     export DATABRICKS_TOKEN=$databricks_token
-      #   displayName: 'Databricks Validate'
-      #   workingDirectory: $(System.DefaultWorkingDirectory)
-
       - script: |
           terraform apply -auto-approve tfplan
-          #terraform apply -auto-approve
-
+      
         displayName: 'Terraform run'
         workingDirectory: $(System.DefaultWorkingDirectory)/
-        # env:
-        #   ARM_CLIENT_ID: $(client-id)
-        #   ARM_CLIENT_SECRET: $(client-secret)
-        #   ARM_TENANT_ID: $(tenant-id)
+        env:
+          ARM_CLIENT_ID: $(client-id)
+          ARM_CLIENT_SECRET: $(client-secret)
+          ARM_TENANT_ID: $(tenant-id)
