@@ -23,7 +23,7 @@ stages:
         inputs:
           azureSubscription: "service-connect-vault-access"
           KeyVaultName: 'kv-razi'
-          SecretsFilter: 'client-id, client-secret, tenant-id'
+          SecretsFilter: 'client-id, client-secret, tenant-id, tfstate-storage-key'
         displayName: 'Azure Key Vault Secrets'
 
       - script: |
@@ -32,7 +32,7 @@ stages:
         workingDirectory: $(System.DefaultWorkingDirectory)/
      
       - script: |
-          terraform init -upgrade
+          terraform init -backend-config="access_key=$tfstate-storage-key"
           terraform fmt
           terraform validate
           terraform plan -out=tfplan
