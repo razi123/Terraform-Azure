@@ -1,5 +1,8 @@
 trigger:
-  - master
+  - '*'
+
+pr:
+  - '*'
   
 pool:
     vmImage: ubuntu-latest
@@ -43,7 +46,7 @@ stages:
         workingDirectory: $(System.DefaultWorkingDirectory)/
 
       - script: |
-          if [ "$(Builda.Reason)" == "PullRequest" ] && [ "$(Build.ReasonCode)" -eq "2" ]; then
+          if [ "$(Build.SourceBranch)" == "refs/heads/master" ]; then
             terraform apply -auto-approve tfplan
           else
             echo "Skipping terraform apply because PR is not yet accepted"
