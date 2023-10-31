@@ -1,7 +1,22 @@
+
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "3.76.0"
+    }
+
+    databricks = {
+      source  = "databricks/databricks"
+      version = "1.0.0"
+    }
+  }
+}
+
 # data "azurerm_client_config" "current" {
 # }
 # add second resoruce group
-resource "azurerm_resource_group" "resource group_name" {
+resource "azurerm_resource_group" "resource_group_name" {
   name = var.resource_group_name
   location = var.location
 }
@@ -10,7 +25,7 @@ resource "azurerm_resource_group" "resource group_name" {
 resource "azurerm_databricks_workspace" "DB_workspace" {
   name                = "databricks-workspace-dev"
   resource_group_name = var.resource_group_name
-  location            = azurerm_resource_group.resource_group.location
+  location            = var.location
   sku                 = "standard"
   managed_resource_group_name = "managed-resource-group-databricks"
   public_network_access_enabled = false
