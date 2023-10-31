@@ -1,63 +1,27 @@
-variable "resource_group_name_commons" {
-  description = "Name of the Azure Resource Group"
-  type        = string
-  default     = "flow-emea-commons"
+variable "resource_group_name" {
+  default = "flow-emea-RG"
 }
 
-variable "storage_account_name_commons" {
-  description = "Name of the Azure storage account commons"
-  type        = string
-  default     = "flowstoragecommons"
+variable "databricks_cluster_name" {
+  default = "test-emea-cluster"
 }
 
-variable "location" {
-  description = "Location of the Azure Resource Group"
-  type        = string
-  default     = "westeurope"
+variable "spark_version" {
+  type    = string
+  default = "8.2.x-scala2.12"
 }
 
-variable "vnet-emea-commons" {
-  description = "vnet_name for storage emea commons"
-  type        = string
-  default     = "flow-vnet-commons"
+variable "driver_node_type_id" {
+  type    = string
+  default = "Standard_F4s"
 }
 
-variable "subnet-emea-commons" {
-  description = "subnet name for storage emea commons"
-  type        = string
-  default     = "flow-subnet-commons"
+variable "node_type_id" {
+  type    = string
+  default = "Standard_F4s"
 }
 
 
-# variable "DATABRICKS_TOKEN" {
-#   description = "Databricks Management API Token"
-#   default     = "your-databricks-token-value"
-# }
-
-
-# variable "client_id" {}
-# variable "client_secret" {}
-# variable "tenant_id" {}
-
-# variable "databricks_cluster_name" {
-#   default = "test-cluster"
-# }
-
-
-# variable "spark_version" {
-#   type    = string
-#   default = "8.2.x-scala2.12"
-# }
-
-# variable "driver_node_type_id" {
-#   type    = string
-#   default = "Standard_F4s"
-# }
-
-# variable "node_type_id" {
-#   type    = string
-#   default = "Standard_F4s"
-# }
 
 
 # variable "client_id" {
@@ -74,5 +38,14 @@ variable "subnet-emea-commons" {
 
 # variable "tenant_id" {
 #   default = "208effc2-b43b-40b9-a5b1-8882b8d51171"
+
+# variable "DATABRICKS_TOKEN" {
+#   description = "Databricks Management API Token"
+#   default     = "your-databricks-token-value"
 # }
+
+
+# variable "client_id" {}
+# variable "client_secret" {}
+# variable "tenant_id" {}
 

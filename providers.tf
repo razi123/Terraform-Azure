@@ -21,7 +21,7 @@ provider "azurerm" {
   # skip_provider_registration = true
 }
 
-# provider "databricks" {
-#   host = "https://accounts.azuredatabricks.net"
+provider "databricks" {
+  host = "https://accounts.azuredatabricks.net"
 
-#   }
+}
