@@ -26,5 +26,5 @@ resource "azurerm_databricks_workspace" "DB_workspace" {
   location            = azurerm_resource_group.resource_group_name.location
   sku                 = "standard"
   managed_resource_group_name = "managed-emea-databricks"
-  public_network_access_enabled = false
+  #public_network_access_enabled = false
 }
