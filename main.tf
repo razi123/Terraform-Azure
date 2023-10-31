@@ -5,8 +5,8 @@ module "remote_state" {
   remote_container_name       = var.remote_container_name
 }
 
-# module "databricks" {
-#   source              = "./modules/databricks"
-#   resource_group_name = var.resource_group_name
-#   location            = var.location
-# }
+module "databricks" {
+  source              = "./modules/databricks"
+  resource_group_name = var.resource_group_name
+  location            = var.location
+}
