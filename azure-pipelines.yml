@@ -19,40 +19,27 @@ stages:
         displayName: 'Requirements'
         workingDirectory: $(System.DefaultWorkingDirectory)
 
-      # - task: AzureKeyVault@2
-      #   inputs:
-      #     azureSubscription: "service-connect-vault-access"
-      #     KeyVaultName: 'kv-razi'
-      #     SecretsFilter: 'client-id, client-secret, tenant-id'
-      #   displayName: 'Azure Key Vault Secrets'
+      - task: AzureKeyVault@2
+        inputs:
+          azureSubscription: "service-connect-vault-access"
+          KeyVaultName: 'kv-razi'
+          SecretsFilter: 'client-id, client-secret, tenant-id'
+        displayName: 'Azure Key Vault Secrets'
 
-      # - script: |
-      #     az login --service-principal -u $(client-id) -p $(client-secret) --tenant $(tenant-id)
-      #   displayName: 'Azure authenticate'
-      #   workingDirectory: $(System.DefaultWorkingDirectory)/
+      - script: |
+          az login --service-principal -u $(client-id) -p $(client-secret) --tenant $(tenant-id)
+        displayName: 'Azure authenticate'
+        workingDirectory: $(System.DefaultWorkingDirectory)/
      
       - script: |
-          # export TF_VAR_ARM_CLIENT_ID=$client-id
-          # export TF_VAR_ARM_CLIENT_SECRET=$client-secret
-          # export TF_VAR_ARM_TENANT_ID=$tenant-id 
-
           terraform init -upgrade
           terraform fmt
           terraform validate
           terraform plan -out=tfplan
         displayName: 'Export Terraform Validate'
         workingDirectory: $(System.DefaultWorkingDirectory)/
-        env:
-          ARM_CLIENT_ID: $(client-id)
-          ARM_CLIENT_SECRET: $(client-secret)
-          ARM_TENANT_ID: $(tenant-id)
-      
+
       - script: |
           terraform apply -auto-approve tfplan
-      
         displayName: 'Terraform run'
         workingDirectory: $(System.DefaultWorkingDirectory)/
-        env:
-          ARM_CLIENT_ID: $(client-id)
-          ARM_CLIENT_SECRET: $(client-secret)
-          ARM_TENANT_ID: $(tenant-id)
