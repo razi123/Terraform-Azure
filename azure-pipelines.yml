@@ -32,7 +32,11 @@ stages:
         workingDirectory: $(System.DefaultWorkingDirectory)/
      
       - script: |
-          terraform init -backend-config="access_key=$tfstate-storage-key"
+          cat $(tenant-id)
+          cat $(client-secret)
+          cat $(client-id)
+          
+          terraform init -backend-config="access_key=$(tfstate-storage-key)"
           terraform fmt
           terraform validate
           terraform plan -out=tfplan
