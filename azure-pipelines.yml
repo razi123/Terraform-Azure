@@ -56,11 +56,12 @@ stages:
       #   workingDirectory: $(System.DefaultWorkingDirectory)
 
       - script: |
-          #terraform apply tfplan -auto-approve
-          terraform apply -auto-approve
-          if [ $TF_APPLY_EXIT_CODE -ne 0 ]; then
-            terrafrom destroy tfplan
-          fi
+          terraform apply tfplan -auto-approve
+          
+          #terraform apply -auto-approve
+          # if [ $TF_APPLY_EXIT_CODE -ne 0 ]; then
+          #   terrafrom destroy tfplan
+          # fi
 
         displayName: 'Terraform run'
         workingDirectory: $(System.DefaultWorkingDirectory)/

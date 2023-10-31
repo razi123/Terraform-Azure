@@ -24,18 +24,11 @@ resource "azurerm_resource_group" "resource_group_name" {
 # add datbricks workspace
 resource "azurerm_databricks_workspace" "DB_workspace" {
   name                = "databricks-workspace-dev"
-  resource_group_name = var.resource_group_name
-  location            = var.location
+  resource_group_name = azurerm_resource_group.resource_group_name.name
+  location            = azurerm_resource_group.resource_group_name.location
   sku                 = "standard"
-  managed_resource_group_name = "managed-resource-group-databricks"
+  managed_resource_group_name = "managed-emea-databricks"
   public_network_access_enabled = false
-}
-
-provider "databricks" {
-  azure_workspace_resource_id = azurerm_databricks_workspace.DB_workspace.id
-  # azure_client_id     = var.client_id
-  # azure_client_secret = var.client_secret
-  # azure_tenant_id     = var.tenant_id
 }
 
 # define databricks cluster
